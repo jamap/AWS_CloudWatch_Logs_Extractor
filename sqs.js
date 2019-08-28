@@ -52,7 +52,8 @@ sqs.listQueues((err, data) => {
       }, (err, data) => {
         if (err) console.log(err, err.stack)
         else {
-          let queueName = data.Attributes.QueueArn.split(':')[data.Attributes.QueueArn.split(':').length - 1]
+          //let queueName = data.Attributes.QueueArn.split(':')[data.Attributes.QueueArn.split(':').length - 1]
+          let queueName = queueUrl.split('/')[queueUrl.split('/').length - 1]
           var params = {
             "StartTime": new Date(process.env.collection_start_time), /*required*/
             "EndTime": new Date(process.env.collection_end_time), /* required */
@@ -87,7 +88,7 @@ sqs.listQueues((err, data) => {
                   var entrada = {
                     "Name": queueName,
                     "Timestamps": item.Timestamps[i],
-                    "Values": item.Values[i]
+                    "Values": parseInt(item.Values[i])
                   };
                   logaConsole(entrada, "Linha que deve ser incluída no resultado");
                   result.queues.push(entrada);
