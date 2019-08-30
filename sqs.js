@@ -41,19 +41,23 @@ result.queues = queues;
 
 logaConsole("", "Getting list of SQSs");
 sqs.listQueues((err, data) => {
-  if (err) console.log(err, err.stack)
+  if (err) {
+    console.log(err, err.stack);
+  }
   else {
     logaConsole(data.QueueUrls.length, "# of SQSs Found");
     data.QueueUrls.forEach((item, index) => {
-      let queueUrl = item.valueOf()
+      let queueUrl = item.valueOf();
       sqs.getQueueAttributes({
         QueueUrl: queueUrl,
         AttributeNames: ['QueueArn']
       }, (err, data) => {
-        if (err) console.log(err, err.stack)
+        if (err) {
+          console.log(err, err.stack) ;
+        }
         else {
           //let queueName = data.Attributes.QueueArn.split(':')[data.Attributes.QueueArn.split(':').length - 1]
-          let queueName = queueUrl.split('/')[queueUrl.split('/').length - 1]
+          let queueName = queueUrl.split('/')[queueUrl.split('/').length - 1];
           var params = {
             "StartTime": new Date(process.env.collection_start_time), /*required*/
             "EndTime": new Date(process.env.collection_end_time), /* required */
@@ -72,7 +76,7 @@ sqs.listQueues((err, data) => {
                     ]
                   },
                   "Period": process.env.grouping_period_in_minutes * 60,
-                  "Stat": "Average"
+                  "Stat": "Sum"
                 }
               }
             ]
@@ -104,7 +108,7 @@ sqs.listQueues((err, data) => {
             }           // successful response
           });
         }
-      })
-    })
+      });
+    });
   }
-})
+});
