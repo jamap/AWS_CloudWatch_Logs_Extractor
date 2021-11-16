@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "dotenv": "^6.1.0",
-    "aws-sdk": "^2.514.0",
+    "aws-sdk": "^2.814.0",
     "json2csv": "^4.0.2",
     "lodash": "^4.17.15",
     "npm": "^6.10.3"
